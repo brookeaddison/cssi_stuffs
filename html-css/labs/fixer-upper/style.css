@@ -15,24 +15,36 @@
  */
 
 body {
-  margin: 0px;
+  margin: 20px;
 }
 
 #header {
   color: white;
-  background-color: #4a75e6;
+  background-color: #505467;
   font-size: 20px;
+  font-family: cursive;
   height: 200px;
-  margin: 0px;
+  margin: 25px;
   padding-top: 3%;
   text-align: center;
-  width: 100%;
+  width: 95%;
 }
 
 #links {
   background-color: #Febc1f;
-  height: 50px;
+  height: 60px;
   text-align: center;
+  margin: initial;
+}
+.images {
+  max-width: 400px;
+  max-height: 450px;
+
+}
+
+#listtitle{
+  font-family:inherit;
+  font-size: 28px;
 }
 
 .link {

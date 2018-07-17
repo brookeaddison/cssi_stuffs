@@ -18,11 +18,14 @@ let balance;
 function openAccount(name){
   balance = 0;
   // Set the value for customer_name equal to name below
-
-  return //write the statment you need to return here
+  //First write the function
+  let customer_name = `${name}`;
+  // if ('customer_name'= name)
+  return `Hello ${customer_name}`//write the statment you need to return here
 }
 
 function deposit(value){
+  balance = 0
   // update the value of balance
   //return the correct statement
 }
