@@ -19,18 +19,21 @@ function openAccount(name){
   balance = 0;
   // Set the value for customer_name equal to name below
   //First write the function
-  let customer_name = `${name}`;
+  customer_name = name;
   // if ('customer_name'= name)
   return `Hello ${customer_name}`//write the statment you need to return here
 }
 
 function deposit(value){
-  balance = 0
+  balance = balance + value;
+  return `${customer_name} has ${balance} in account.`
   // update the value of balance
   //return the correct statement
 }
 
-function withdraw(/*argument here*/){
+function withdraw(wdvalue){
+  balance = balance - wdvalue
+  return `${customer_name} has ${balance} in account`;
   //update the value of balance
   //return the correct statement
 }
