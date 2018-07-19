@@ -33,10 +33,11 @@ function makeGreetMessage(name1, name2=null) {
 
 
 function greet(name1,name2=null) {
-  if (name1[0] !== "A"){
+  if (name1[0] !== "A") {
 
   }
-}
+  }
+
 
 greet ('Alice', 'Bob');
 
@@ -55,3 +56,49 @@ greet(name1, name2='null') {
   console.log(`Hello ${name1} and ${name2}`);
   }
 }
+
+const names = ['brooke', 'lenee', 'Zach', 'Patrick'];
+for (let i = 0; i < 4; i++) {
+  console.log(names[i]);
+}
+let i = 0;
+// is i < 4 === distributed
+console.log(names[i]);
+console.log(names[i]);
+
+
+
+
+const article = {
+  name: 'BROOKE IS SO COOL',
+  views: 2458,
+  datePublished: 'January 26,2018',
+  author: {
+      name: '..',
+      title: '...'
+  }, {
+      name: '...',
+      title:'....',
+
+
+  }],
+};
+
+const floatingBox = document.querySelector('.floatingBox');
+floatingBox.addEventListener('keydown', (event) => {
+  const key = event.key;
+  if (key == 'ArrowDown'); {
+    boxTop += 5;
+  } else if (key == 'ArrowUp'); {
+    boxUp -= 5;
+  } else if (key == 'ArrowLeft'); {
+    boxLeft -= 5;
+  } else if (key == 'ArrowRight'); {
+    boxRight += 5;
+  } else {
+    return;
+  }
+  floatingBox.style.top = boxTop + 'px';
+  floatingBox.style.left = boxLeft + 'px';
+  console.log(event);
+});
