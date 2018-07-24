@@ -17,6 +17,12 @@ from google.appengine.api import urlfetch
 import json
 import urllib
 import random
+import logging
+import jinja2
+
+
+template_loader = jinja2.FileSystemLoader(searchpath="./")
+template_env = jinja2.Environment(loader=template_loader)
 
 
 class MainPage(webapp2.RequestHandler):
@@ -30,7 +36,7 @@ class MainPage(webapp2.RequestHandler):
             result = urlfetch.fetch(url)
             if result.status_code == 200:
                 # self.response.write(type(result.content))
-                random_text = ['this is a meme', 'eff you bro','goodbye bih', 'okurr','poop scoop', 'go away']
+                random_text = ['this is a meme', 'i Am sMaRt','goodbye bih', 'okurr','poop scoop', 'go away']
                 json_dict=json.loads(result.content)
                 # picture_url = (json_dict['data']['memes'][0]['url'])
                 # self.response.write('<img src="{pic}"/>'.format(pic=picture_url))
@@ -52,14 +58,99 @@ class MainPage(webapp2.RequestHandler):
             url=caption_url,
             payload=urllib.urlencode(caption_dict),
             method=urlfetch.POST)
-        new-meme-dict = json.loads(result.content)
-        picture_url = new-meme-dict['data']['url']
-        self.response.write('<img src="{pic}"/>'.format(pic = picture_url))
+        new_meme_dict = json.loads(result.content)
+        picture_url = new_meme_dict['data']['url']
+        # self.response.write('<img src="{pic}"/>'.format(pic = picture_url))
 
+
+class MemeType(webapp2.RequestHandler):
+    def get(self):
+        self.response.write('how do i get that file')
+        template = template_env.get_template('templates/home.html')
+        data = {'img_src': 'https://i.imgflip.com/1otk96.jpg'}
+        self.response.write(template.render(data))
+
+
+class MemeResults(webapp2.RequestHandler):
+    def post(self):
+        meme_type = self.request.get('meme-type')
+        textz = 'You clicked Winner and ofc winners are basketball players so...'
+        textz2='Hey there!'
+        template_id=''
+
+        url = 'https://api.imgflip.com/get_memes'
+        try:
+            result = urlfetch.fetch(url)
+            if result.status_code == 200:
+                # self.response.write(type(result.content))
+
+                json_dict=json.loads(result.content)
+                # picture_url = (json_dict['data']['memes'][0]['url'])
+                # self.response.write('<img src="{pic}"/>'.format(pic=picture_url))
+                random_meme = random.choice(json_dict['data']['memes'])['id']
+            else:
+                self.response.status_code = result.status_code
+        except urlfetch.Error:
+            logging.exception('Caught exception fetching url')
+        if meme_type == 'sports':
+            textw= ['woo','booyahhh']
+            textw2=['hee', 'awww yiissssss']
+            textz=random.choice(textw)
+            textz2=random.choice(textw2)
+        #     self.response.write(textz);
+        #     picz = 'https://www.spalding.com/dw/image/v2/ABAH_PRD/on/demandware.static/-/Sites-masterCatalog_SPALDING/default/dw10a8f40a/images/hi-res/Spalding-Digital-Assets_15520.jpg?sw=318&sh=395&sm=cut'
+        else:
+
+            textl=['Loser','sucks to suck','sorry bro']
+            textl2=['Lol', 'hahahah','wowowowow']
+            textz=random.choice(textl)
+            textz2=random.choice(textl2)
+
+
+        caption_url = 'https://api.imgflip.com/caption_image'
+        caption_dict = {
+        'template_id': random_meme,
+        'username': 'brookeokay',
+        'password': 'brookeokay',
+        'text0': textz,
+        'text1': textz2
+        }
+        result = urlfetch.fetch(
+            url=caption_url,
+            payload=urllib.urlencode(caption_dict),
+            method=urlfetch.POST)
+        new_meme_dict = json.loads(result.content)
+        picture_url = new_meme_dict['data']['url']
+            # self.response.write(textz2);
+            # picz = 'https://pbs.twimg.com/profile_images/764112991826698240/_4CpiqnH_400x400.jpg'
+        # self.response.write("my post handler - your name was {meme_type}".format(meme_type=meme_type))
+        template = template_env.get_template('templates/meme_results.html')
+        # resultz = {'pic': picz}
+        pic ={'pic':picture_url}
+
+        # data = {'img_src': 'https://i.imgflip.com/1otk96.jpg'}
+        self.response.write(template.render(pic))
+
+    # def post(self):
+    #     meme_types = self.request.get('meme-types')
+    #     self.response.write("my post handler - your name was {meme_type}".format(meme_types=meme_types))
+    #
+
+class RecipeBrowser(webapp2.RequestHandler):
+
+    def get(self):
+        template = template_env.get_template('templates/recipes.html')
+        recipe = {'ingredients': ['cottage cheese','pieapple'],'crusine': 'nixonian'}
+        self.response.write(template.render(recipe))
 
 
 app = webapp2.WSGIApplication([
     ('/', MainPage),
+    ('/meme', MemeType),
+    ('/meme_temp', MemeType),
+    ('/meme_result', MemeResults),
+    ('/meme_results', MemeResults)
+
 
 
 ], debug=True)

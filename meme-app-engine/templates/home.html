@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Welcome!</title>
+  </head>
+  <body>
+    <h1>Meme Generator</h1>
+    <img height="100px" width="150px" src="{{img_src}}"/>
+    <h2>Welcome to my meme Generator</h2>
+
+    <form method=POST action="/meme_result">
+      Line 1 of meme:<br>
+      <input type ="text" name="user-first-ln" value="first line of meme">
+      Line 2 of meme:<br>
+      <input type ="text" name="user-next-ln" value="second line of meme">
+
+
+      <select name="meme-type">
+        <option value="I'm happpppyyy">Happy kid dancing</option>
+        <option value="sports">WINNER</option>
+        <option value="LOLZ">Lol kinda not into this</option>
+      </select><br>
+      <input type="submit" value="Go">
+      <input type="click" value="zoom">
+    </form>
+
+    <form method=POST action="/meme_results">
+      Line 1 of meme:<br>
+      <input type ="text" name="user-first-ln2" value="first line of meme">
+      Line 2 of meme:<br>
+      <input type ="text" name="user-next-ln2" value="second line of meme">
+
+
+      <select name="meme-types">
+        <option value="I'm happpppyyy">Happy child dancing</option>
+        <option value="sports">WINNERMON</option>
+        <option value="LOL">Hello</option>
+      </select><br>
+      <input type="submit" value="going">
+      <input type="click" value="zooming">
+    </form>
+
+  </body>
+</html>
