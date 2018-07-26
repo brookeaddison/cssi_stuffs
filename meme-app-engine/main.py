@@ -41,10 +41,13 @@ class MainPage(webapp2.RequestHandler):
                 # picture_url = (json_dict['data']['memes'][0]['url'])
                 # self.response.write('<img src="{pic}"/>'.format(pic=picture_url))
                 random_meme = random.choice(json_dict['data']['memes'])['id']
+
             else:
                 self.response.status_code = result.status_code
         except urlfetch.Error:
             logging.exception('Caught exception fetching url')
+
+
 
         caption_url = 'https://api.imgflip.com/caption_image'
         caption_dict = {
@@ -65,7 +68,30 @@ class MainPage(webapp2.RequestHandler):
 
 class MemeType(webapp2.RequestHandler):
     def get(self):
-        self.response.write('how do i get that file')
+        # Get all of the memes
+        url = 'https://api.imgflip.com/get_memes'
+        try:
+            result = urlfetch.fetch(url)
+            if result.status_code == 200:
+                json_dict=json.loads(result.content)
+                all_meme = json_dict['data']['memes']
+            else:
+                self.response.status_code = result.status_code
+        except urlfetch.Error:
+            logging.exception('Caught exception fetching url')
+
+
+        # Make a dictionary
+        meme_dicts = {}
+
+
+
+        # Put all the memes in the dictiony where the key is the id and
+        # the value is the id
+        for meme in all_meme:
+            meme_dicts['id']='name'
+
+        self.response.write("Let's make a meme!")
         template = template_env.get_template('templates/home.html')
         data = {'img_src': 'https://i.imgflip.com/1otk96.jpg'}
         self.response.write(template.render(data))
@@ -136,12 +162,7 @@ class MemeResults(webapp2.RequestHandler):
     #     self.response.write("my post handler - your name was {meme_type}".format(meme_types=meme_types))
     #
 
-class RecipeBrowser(webapp2.RequestHandler):
 
-    def get(self):
-        template = template_env.get_template('templates/recipes.html')
-        recipe = {'ingredients': ['cottage cheese','pieapple'],'crusine': 'nixonian'}
-        self.response.write(template.render(recipe))
 
 
 app = webapp2.WSGIApplication([

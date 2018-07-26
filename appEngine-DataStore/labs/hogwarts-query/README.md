@@ -24,9 +24,18 @@ print hogwarts_models.Student.query().fetch()
 ```
 Use print statements to find:
 * the mascot of Ravenclaw
+  <!-- print hogwarts.models House query(hogwarts.models.house.name ==       "ravenclaw").mascot[0] -->
 * the number of Courses in datastore
+  <!-- print len(hogwarts_models.course.query().fetch()) -->
 * the teacher with the most least amount of teaching experience
+<!-- teachers_by_experience = hogwarts_models.Teacher.query().order() -->
+
+
+print 'Most Experienced' + teachers_by_experience[0].name
+print 'Least Experienced' + teachers_by_experience[-1].name
 * the student enrolled in the most classes
+
+
 * the material of Harry's Wand
 
 ### Query Data to Views

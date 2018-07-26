@@ -1,0 +1,32 @@
+
+<html>
+<head>
+  <link rel="stylesheet" type= "text/css" href="../my-style-dir/fbstyle.css">
+<div class=fblogo>
+  <img src="/my-images-dir/fb.png"/>
+</div>
+<body>
+  <body>
+  <form method="POST">
+    email:   <input type="text" name="user_email"><br>
+    password:<input type="text" name="user_password"><br>
+    name:    <input type= "text" name= "user_name"><br>
+    <input type="submit" value="Save User">
+
+  </form>
+</div>
+
+
+  {% for user in users %}
+    <form method="POST" action="/datadelete">
+      {{ user.name}}<br>
+      <input type="submit" value="delete user!">
+      <input type="hidden" name="fb_key" value="{{user.key.id()}}">
+    </form>
+  {% endfor%}
+
+
+
+</body>
+</head>
+</html>

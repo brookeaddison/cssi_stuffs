@@ -35,6 +35,8 @@ import os
 import jinja2
 import random
 
+from facebook import User
+
 
 def get_fortune():
     fortune_list=['Tomorrow, you will meet a life-changing new friend.',
@@ -67,8 +69,39 @@ class FortuneHandler(webapp2.RequestHandler):
         #astro_sign = request.form.get('user_astrological_sign')
         self.response.write(end_template.render(my_dict))
 
+    # class TestDataHandler(webapp2.RequestHandler):
+    #     def get(self):
+    #         test_movie =Movie(title='Bill & Tedd',runtime)
+
+class TestDataHandler(webapp2.RequestHandler):
+    def get(self):
+        data = {'users': User.query().fetch()}
+        start_template=jinja_current_directory.get_template("templates/facebook.html")
+        self.response.write(start_template.render(data))
+
+
+
+    def post(self):
+        email = self.request.get('user_email')
+        password = self.request.get('user_password')
+        name = self.request.get('user_name')
+        facebook_user =User(email=email, password=password, name=name)
+        facebook_user.put()
+        self.get()
+
+class DataDelete(webapp2.RequestHandler):
+    def post(self):
+        key = self.request.get('fb_key')
+        user_to_delete = User.get_by_id(int(key))
+        user_to_delete.key.delete()
+        self.response.write("User deleted!")
+
+
+
 
 
 app = webapp2.WSGIApplication([
-    ('/', FortuneHandler)
+    ('/', FortuneHandler),
+    ('/facebook', TestDataHandler),
+    ('/datadelete', DataDelete)
 ], debug=True)
